@@ -1,4 +1,6 @@
-let HomeController = function() {
+let HomeController = function(PARSE) {
+
+  console.log(PARSE);
 
   let vm = this;
   
@@ -6,6 +8,6 @@ let HomeController = function() {
 
 };
 
-HomeController.$inject = [];
+HomeController.$inject = ['PARSE'];
 
 export default HomeController;
