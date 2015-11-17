@@ -16,7 +16,7 @@ let config = function($stateProvider, $urlRouterProvider) {
     .state('root.home', {
       url: '/',
       // Use Controller as Syntax
-      controller: 'HomeController as home',
+      controller: 'HomeController as vm',
       templateUrl: 'templates/home.tpl.html'
     });
 };

@@ -1,9 +1,11 @@
-let HomeController = function($scope) {
+let HomeController = function() {
+
+  let vm = this;
   
-  $scope.title = 'Home Page';
+  vm.title = 'Home Page';
 
 };
 
-HomeController.$inject = ['$scope'];
+HomeController.$inject = [];
 
 export default HomeController;

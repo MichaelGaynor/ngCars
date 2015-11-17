@@ -22,7 +22,7 @@ var config = function config($stateProvider, $urlRouterProvider) {
   .state('root.home', {
     url: '/',
     // Use Controller as Syntax
-    controller: 'HomeController as home',
+    controller: 'HomeController as vm',
     templateUrl: 'templates/home.tpl.html'
   });
 };
@@ -38,12 +38,14 @@ module.exports = exports['default'];
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-var HomeController = function HomeController($scope) {
+var HomeController = function HomeController() {
 
-  $scope.title = 'Home Page';
+  var vm = this;
+
+  vm.title = 'Home Page';
 };
 
-HomeController.$inject = ['$scope'];
+HomeController.$inject = [];
 
 exports['default'] = HomeController;
 module.exports = exports['default'];
