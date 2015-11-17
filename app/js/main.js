@@ -62,20 +62,28 @@ exports['default'] = {
 module.exports = exports['default'];
 
 },{}],3:[function(require,module,exports){
-"use strict";
+'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
   value: true
 });
-var CarsAddController = function CarsAddController() {
+var CarsAddController = function CarsAddController(CarService) {
 
   var vm = this;
+
+  vm.addCar = addCar;
+
+  function addCar(carObj) {
+    CarService.addCar(carObj).then(function (res) {
+      console.log(res);
+    });
+  };
 };
 
-CarsAddController.$inject = [];
+CarsAddController.$inject = ['CarService'];
 
-exports["default"] = CarsAddController;
-module.exports = exports["default"];
+exports['default'] = CarsAddController;
+module.exports = exports['default'];
 
 },{}],4:[function(require,module,exports){
 "use strict";
@@ -145,11 +153,17 @@ var _controllersCarsAddController = require('./controllers/cars-add.controller')
 
 var _controllersCarsAddController2 = _interopRequireDefault(_controllersCarsAddController);
 
-// Import some Constants
+// Import our Constants
 
 var _constantsParseConstant = require('./constants/parse.constant');
 
 var _constantsParseConstant2 = _interopRequireDefault(_constantsParseConstant);
+
+// Import our Services
+
+var _servicesCarService = require('./services/car.service');
+
+var _servicesCarService2 = _interopRequireDefault(_servicesCarService);
 
 // Call our `angular` global object to add our blocks to
 _angular2['default']
@@ -157,12 +171,51 @@ _angular2['default']
 .module('app', ['ui.router'])
 // Our Configuration Block
 .config(_config2['default'])
-// Register Our Constants
+// Register our Constants
 .constant('PARSE', _constantsParseConstant2['default'])
-// Register Our Controllers
-.controller('HomeController', _controllersHomeController2['default']).controller('CarsController', _controllersCarsController2['default']).controller('CarsAddController', _controllersCarsAddController2['default']);
+// Register our Controllers
+.controller('HomeController', _controllersHomeController2['default']).controller('CarsController', _controllersCarsController2['default']).controller('CarsAddController', _controllersCarsAddController2['default'])
+// Register our Services
+.service('CarService', _servicesCarService2['default']);
 
-},{"./config":1,"./constants/parse.constant":2,"./controllers/cars-add.controller":3,"./controllers/cars.controller":4,"./controllers/home.controller":5,"angular":9,"angular-ui-router":7}],7:[function(require,module,exports){
+},{"./config":1,"./constants/parse.constant":2,"./controllers/cars-add.controller":3,"./controllers/cars.controller":4,"./controllers/home.controller":5,"./services/car.service":7,"angular":10,"angular-ui-router":8}],7:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+var CarService = function CarService($http, PARSE) {
+
+  var url = PARSE.URL + 'classes/car';
+
+  this.getAllCars = getAllCars;
+  this.addCar = addCar;
+
+  function Car(carObj) {
+    this.make = carObj.make;
+    this.model = carObj.model;
+    this.year = Number(carObj.year);
+    this.name = carObj.name;
+    this.color = carObj.color;
+    this.fuzzydice = true;
+  };
+
+  function getAllCars() {
+    return $http.get(url, PARSE.CONFIG);
+  };
+
+  function addCar(carObj) {
+    var c = new Car(carObj);
+    return $http.post(url, c, PARSE.CONFIG);
+  };
+};
+
+CarService.$inject = ['$http', 'PARSE'];
+
+exports['default'] = CarService;
+module.exports = exports['default'];
+
+},{}],8:[function(require,module,exports){
 /**
  * State-based routing for AngularJS
  * @version v0.2.15
@@ -4533,7 +4586,7 @@ angular.module('ui.router.state')
   .filter('isState', $IsStateFilter)
   .filter('includedByState', $IncludedByStateFilter);
 })(window, window.angular);
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 /**
  * @license AngularJS v1.4.7
  * (c) 2010-2015 Google, Inc. http://angularjs.org
@@ -33438,11 +33491,11 @@ $provide.value("$locale", {
 })(window, document);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":8}]},{},[6])
+},{"./angular":9}]},{},[6])
 
 
 //# sourceMappingURL=main.js.map

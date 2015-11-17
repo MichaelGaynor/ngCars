@@ -10,8 +10,11 @@ import HomeController from './controllers/home.controller';
 import CarsController from './controllers/cars.controller';
 import CarsAddController from './controllers/cars-add.controller';
 
-// Import some Constants
+// Import our Constants
 import PARSE from './constants/parse.constant';
+
+// Import our Services
+import CarService from './services/car.service';
 
 // Call our `angular` global object to add our blocks to
 angular
@@ -19,10 +22,12 @@ angular
   .module('app', ['ui.router'])
   // Our Configuration Block
   .config(config)
-  // Register Our Constants
+  // Register our Constants
   .constant('PARSE', PARSE)
-  // Register Our Controllers
+  // Register our Controllers
   .controller('HomeController', HomeController)
   .controller('CarsController', CarsController)
   .controller('CarsAddController', CarsAddController)
+  // Register our Services
+  .service('CarService', CarService)
 ;

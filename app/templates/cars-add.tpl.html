@@ -1,3 +1,10 @@
 <h3>Add a Car</h3>
 
-<p>Coming soon...</p>
+<form ng-submit="vm.addCar(car)">
+  <input placeholder="Make" ng-model="car.make">
+  <input placeholder="Model" ng-model="car.model">
+  <input placeholder="Year" ng-model="car.year">
+  <input placeholder="Color" ng-model="car.color">
+  <input placeholder="Name" ng-model="car.name">
+  <button>Add Car</button>
+</form>
