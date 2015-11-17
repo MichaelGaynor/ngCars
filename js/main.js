@@ -7,6 +7,8 @@ import config from './config';
 
 // Import our Controllers
 import HomeController from './controllers/home.controller';
+import CarsController from './controllers/cars.controller';
+import CarsAddController from './controllers/cars-add.controller';
 
 // Call our `angular` global object to add our blocks to
 angular
@@ -16,4 +18,6 @@ angular
   .config(config)
   // Register Our Controllers
   .controller('HomeController', HomeController)
+  .controller('CarsController', CarsController)
+  .controller('CarsAddController', CarsAddController)
 ;

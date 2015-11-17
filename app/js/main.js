@@ -24,6 +24,18 @@ var config = function config($stateProvider, $urlRouterProvider) {
     // Use Controller as Syntax
     controller: 'HomeController as vm',
     templateUrl: 'templates/home.tpl.html'
+  })
+  // My Cars
+  .state('root.cars', {
+    url: '/cars',
+    controller: 'CarsController as vm',
+    templateUrl: 'templates/cars.tpl.html'
+  })
+  // Add Car
+  .state('root.addCar', {
+    url: '/cars/add',
+    controller: 'CarsAddController as vm',
+    templateUrl: 'templates/cars-add.tpl.html'
   });
 };
 
@@ -33,6 +45,38 @@ exports['default'] = config;
 module.exports = exports['default'];
 
 },{}],2:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var CarsAddController = function CarsAddController() {
+
+  var vm = this;
+};
+
+CarsAddController.$inject = [];
+
+exports["default"] = CarsAddController;
+module.exports = exports["default"];
+
+},{}],3:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var CarsController = function CarsController() {
+
+  var vm = this;
+};
+
+CarsController.$inject = [];
+
+exports["default"] = CarsController;
+module.exports = exports["default"];
+
+},{}],4:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -50,7 +94,7 @@ HomeController.$inject = [];
 exports['default'] = HomeController;
 module.exports = exports['default'];
 
-},{}],3:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 // Import our core files
 'use strict';
 
@@ -74,6 +118,14 @@ var _controllersHomeController = require('./controllers/home.controller');
 
 var _controllersHomeController2 = _interopRequireDefault(_controllersHomeController);
 
+var _controllersCarsController = require('./controllers/cars.controller');
+
+var _controllersCarsController2 = _interopRequireDefault(_controllersCarsController);
+
+var _controllersCarsAddController = require('./controllers/cars-add.controller');
+
+var _controllersCarsAddController2 = _interopRequireDefault(_controllersCarsAddController);
+
 // Call our `angular` global object to add our blocks to
 _angular2['default']
 // Define our Module - common practice is to use 'app'
@@ -81,9 +133,9 @@ _angular2['default']
 // Our Configuration Block
 .config(_config2['default'])
 // Register Our Controllers
-.controller('HomeController', _controllersHomeController2['default']);
+.controller('HomeController', _controllersHomeController2['default']).controller('CarsController', _controllersCarsController2['default']).controller('CarsAddController', _controllersCarsAddController2['default']);
 
-},{"./config":1,"./controllers/home.controller":2,"angular":6,"angular-ui-router":4}],4:[function(require,module,exports){
+},{"./config":1,"./controllers/cars-add.controller":2,"./controllers/cars.controller":3,"./controllers/home.controller":4,"angular":8,"angular-ui-router":6}],6:[function(require,module,exports){
 /**
  * State-based routing for AngularJS
  * @version v0.2.15
@@ -4454,7 +4506,7 @@ angular.module('ui.router.state')
   .filter('isState', $IsStateFilter)
   .filter('includedByState', $IncludedByStateFilter);
 })(window, window.angular);
-},{}],5:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 /**
  * @license AngularJS v1.4.7
  * (c) 2010-2015 Google, Inc. http://angularjs.org
@@ -33359,11 +33411,11 @@ $provide.value("$locale", {
 })(window, document);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],6:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":5}]},{},[3])
+},{"./angular":7}]},{},[5])
 
 
 //# sourceMappingURL=main.js.map

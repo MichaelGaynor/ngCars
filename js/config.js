@@ -18,6 +18,18 @@ let config = function($stateProvider, $urlRouterProvider) {
       // Use Controller as Syntax
       controller: 'HomeController as vm',
       templateUrl: 'templates/home.tpl.html'
+    })
+    // My Cars
+    .state('root.cars', {
+      url: '/cars',
+      controller: 'CarsController as vm',
+      templateUrl: 'templates/cars.tpl.html'
+    })
+    // Add Car
+    .state('root.addCar', {
+      url: '/cars/add',
+      controller: 'CarsAddController as vm',
+      templateUrl: 'templates/cars-add.tpl.html'
     });
 };
 
