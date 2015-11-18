@@ -30,6 +30,10 @@ let config = function($stateProvider, $urlRouterProvider) {
       url: '/cars/add',
       controller: 'CarsAddController as vm',
       templateUrl: 'templates/app-cars/cars-add.tpl.html'
+    })
+    // Single Car
+    .state('root.singleCar', {
+      url: '/cars/:id'
     });
 };
 

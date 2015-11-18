@@ -6395,4 +6395,7 @@ body {
   width: 600px;
   margin: 20px auto; }
 
+.panel {
+  cursor: pointer; }
+
 /*# sourceMappingURL=main.css.map */

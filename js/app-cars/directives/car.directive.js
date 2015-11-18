@@ -1,4 +1,4 @@
-let carItem = function() {
+let carItem = function($state, CarService) {
   
   return {
     restrict: 'E',
@@ -12,10 +12,16 @@ let carItem = function() {
         <p>{{ car.year }} {{ car.make }} {{ car.model }}</p>
       </div>
     `,
+    link: function (scope, element, attrs) {
+      element.on('click', function () {
+        CarService.destroy(scope.car.name);
+        //$state.go('root.singleCar', { id: scope.car.objectId });
+      });
+    }
   };
 
 };
 
-carItem.$inject = [];
+carItem.$inject = ['$state', 'CarService'];
 
 export default carItem;

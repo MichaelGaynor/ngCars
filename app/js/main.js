@@ -54,7 +54,7 @@ module.exports = exports['default'];
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-var carItem = function carItem() {
+var carItem = function carItem($state, CarService) {
 
   return {
     restrict: 'E',
@@ -62,11 +62,17 @@ var carItem = function carItem() {
     scope: {
       car: '=pizza'
     },
-    template: '\n      <div class="panel">\n        <h5>{{ car.name }}</h5>\n        <p>{{ car.year }} {{ car.make }} {{ car.model }}</p>\n      </div>\n    '
+    template: '\n      <div class="panel">\n        <h5>{{ car.name }}</h5>\n        <p>{{ car.year }} {{ car.make }} {{ car.model }}</p>\n      </div>\n    ',
+    link: function link(scope, element, attrs) {
+      element.on('click', function () {
+        CarService.destroy(scope.car.name);
+        //$state.go('root.singleCar', { id: scope.car.objectId });
+      });
+    }
   };
 };
 
-carItem.$inject = [];
+carItem.$inject = ['$state', 'CarService'];
 
 exports['default'] = carItem;
 module.exports = exports['default'];
@@ -112,6 +118,7 @@ var CarService = function CarService($http, PARSE) {
 
   this.getAllCars = getAllCars;
   this.addCar = addCar;
+  this.destroy = destroy;
 
   function Car(carObj) {
     this.make = carObj.make;
@@ -129,6 +136,10 @@ var CarService = function CarService($http, PARSE) {
   function addCar(carObj) {
     var c = new Car(carObj);
     return $http.post(url, c, PARSE.CONFIG);
+  }
+
+  function destroy(name) {
+    return console.log(name + ' has been destroyed');
   }
 };
 
@@ -175,6 +186,10 @@ var config = function config($stateProvider, $urlRouterProvider) {
     url: '/cars/add',
     controller: 'CarsAddController as vm',
     templateUrl: 'templates/app-cars/cars-add.tpl.html'
+  })
+  // Single Car
+  .state('root.singleCar', {
+    url: '/cars/:id'
   });
 };
 

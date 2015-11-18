@@ -4,6 +4,7 @@ let CarService = function($http, PARSE) {
 
   this.getAllCars = getAllCars;
   this.addCar = addCar;
+  this.destroy = destroy;
 
   function Car (carObj) {
     this.make = carObj.make;
@@ -23,6 +24,9 @@ let CarService = function($http, PARSE) {
     return $http.post(url, c, PARSE.CONFIG);
   }
 
+  function destroy (name) {
+    return console.log(name + ' has been destroyed');
+  }
 
 };
 
