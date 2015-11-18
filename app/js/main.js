@@ -4,69 +4,6 @@
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-var config = function config($stateProvider, $urlRouterProvider) {
-
-  // If no route matches, go to home route
-  $urlRouterProvider.otherwise('/');
-
-  // Set up some States
-  $stateProvider
-  // Main Root State
-  // It is an abstract state because we want a nice way to
-  // manage our layout that will be on all child states
-  .state('root', {
-    abstract: true,
-    templateUrl: 'templates/layout.tpl.html'
-  })
-  // Home State
-  .state('root.home', {
-    url: '/',
-    // Use Controller as Syntax
-    controller: 'HomeController as vm',
-    templateUrl: 'templates/home.tpl.html'
-  })
-  // My Cars
-  .state('root.cars', {
-    url: '/cars',
-    controller: 'CarsController as vm',
-    templateUrl: 'templates/cars.tpl.html'
-  })
-  // Add Car
-  .state('root.addCar', {
-    url: '/cars/add',
-    controller: 'CarsAddController as vm',
-    templateUrl: 'templates/cars-add.tpl.html'
-  });
-};
-
-config.$inject = ['$stateProvider', '$urlRouterProvider'];
-
-exports['default'] = config;
-module.exports = exports['default'];
-
-},{}],2:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
-exports['default'] = {
-  URL: 'https://api.parse.com/1/',
-  CONFIG: {
-    headers: {
-      'X-Parse-Application-Id': '3XAZgkJZgQdpMkraE5ySbm1zBEW7kVX8c5gJb6wZ',
-      'X-Parse-REST-API-Key': 'ksiW4hMQJdZ2BH7eo4M6o1lBMEnB4zvxxrfUSqjM'
-    }
-  }
-};
-module.exports = exports['default'];
-
-},{}],3:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
 var CarsAddController = function CarsAddController(CarService) {
 
   var vm = this;
@@ -85,7 +22,7 @@ CarsAddController.$inject = ['CarService'];
 exports['default'] = CarsAddController;
 module.exports = exports['default'];
 
-},{}],4:[function(require,module,exports){
+},{}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -101,28 +38,7 @@ CarsController.$inject = [];
 exports["default"] = CarsController;
 module.exports = exports["default"];
 
-},{}],5:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
-var HomeController = function HomeController(PARSE) {
-
-  console.log(PARSE);
-
-  var vm = this;
-
-  vm.title = 'Home Page';
-};
-
-HomeController.$inject = ['PARSE'];
-
-exports['default'] = HomeController;
-module.exports = exports['default'];
-
-},{}],6:[function(require,module,exports){
-// Import our core files
+},{}],3:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -131,19 +47,7 @@ var _angular = require('angular');
 
 var _angular2 = _interopRequireDefault(_angular);
 
-require('angular-ui-router');
-
-// Import config, run & constant, value blocks
-
-var _config = require('./config');
-
-var _config2 = _interopRequireDefault(_config);
-
-// Import our Controllers
-
-var _controllersHomeController = require('./controllers/home.controller');
-
-var _controllersHomeController2 = _interopRequireDefault(_controllersHomeController);
+require('../app-core/index');
 
 var _controllersCarsController = require('./controllers/cars.controller');
 
@@ -153,32 +57,13 @@ var _controllersCarsAddController = require('./controllers/cars-add.controller')
 
 var _controllersCarsAddController2 = _interopRequireDefault(_controllersCarsAddController);
 
-// Import our Constants
-
-var _constantsParseConstant = require('./constants/parse.constant');
-
-var _constantsParseConstant2 = _interopRequireDefault(_constantsParseConstant);
-
-// Import our Services
-
 var _servicesCarService = require('./services/car.service');
 
 var _servicesCarService2 = _interopRequireDefault(_servicesCarService);
 
-// Call our `angular` global object to add our blocks to
-_angular2['default']
-// Define our Module - common practice is to use 'app'
-.module('app', ['ui.router'])
-// Our Configuration Block
-.config(_config2['default'])
-// Register our Constants
-.constant('PARSE', _constantsParseConstant2['default'])
-// Register our Controllers
-.controller('HomeController', _controllersHomeController2['default']).controller('CarsController', _controllersCarsController2['default']).controller('CarsAddController', _controllersCarsAddController2['default'])
-// Register our Services
-.service('CarService', _servicesCarService2['default']);
+_angular2['default'].module('app.cars', ['app.core']).controller('CarsController', _controllersCarsController2['default']).controller('CarsAddController', _controllersCarsAddController2['default']).service('CarService', _servicesCarService2['default']);
 
-},{"./config":1,"./constants/parse.constant":2,"./controllers/cars-add.controller":3,"./controllers/cars.controller":4,"./controllers/home.controller":5,"./services/car.service":7,"angular":10,"angular-ui-router":8}],7:[function(require,module,exports){
+},{"../app-core/index":7,"./controllers/cars-add.controller":1,"./controllers/cars.controller":2,"./services/car.service":4,"angular":13}],4:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -215,7 +100,146 @@ CarService.$inject = ['$http', 'PARSE'];
 exports['default'] = CarService;
 module.exports = exports['default'];
 
-},{}],8:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+var config = function config($stateProvider, $urlRouterProvider) {
+
+  // If no route matches, go to home route
+  $urlRouterProvider.otherwise('/');
+
+  // Set up some States
+  $stateProvider
+  // Main Root State
+  // It is an abstract state because we want a nice way to
+  // manage our layout that will be on all child states
+  .state('root', {
+    abstract: true,
+    templateUrl: 'templates/app-layout/layout.tpl.html'
+  })
+  // Home State
+  .state('root.home', {
+    url: '/',
+    // Use Controller as Syntax
+    controller: 'HomeController as vm',
+    templateUrl: 'templates/app-layout/home.tpl.html'
+  })
+  // My Cars
+  .state('root.cars', {
+    url: '/cars',
+    controller: 'CarsController as vm',
+    templateUrl: 'templates/app-cars/cars.tpl.html'
+  })
+  // Add Car
+  .state('root.addCar', {
+    url: '/cars/add',
+    controller: 'CarsAddController as vm',
+    templateUrl: 'templates/app-cars/cars-add.tpl.html'
+  });
+};
+
+config.$inject = ['$stateProvider', '$urlRouterProvider'];
+
+exports['default'] = config;
+module.exports = exports['default'];
+
+},{}],6:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+exports['default'] = {
+  URL: 'https://api.parse.com/1/',
+  CONFIG: {
+    headers: {
+      'X-Parse-Application-Id': '3XAZgkJZgQdpMkraE5ySbm1zBEW7kVX8c5gJb6wZ',
+      'X-Parse-REST-API-Key': 'ksiW4hMQJdZ2BH7eo4M6o1lBMEnB4zvxxrfUSqjM'
+    }
+  }
+};
+module.exports = exports['default'];
+
+},{}],7:[function(require,module,exports){
+'use strict';
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _angular = require('angular');
+
+var _angular2 = _interopRequireDefault(_angular);
+
+require('angular-ui-router');
+
+var _config = require('./config');
+
+var _config2 = _interopRequireDefault(_config);
+
+var _constantsParseConstant = require('./constants/parse.constant');
+
+var _constantsParseConstant2 = _interopRequireDefault(_constantsParseConstant);
+
+_angular2['default'].module('app.core', ['ui.router']).config(_config2['default']).constant('PARSE', _constantsParseConstant2['default']);
+
+},{"./config":5,"./constants/parse.constant":6,"angular":13,"angular-ui-router":11}],8:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+var HomeController = function HomeController(PARSE) {
+
+  console.log(PARSE);
+
+  var vm = this;
+
+  vm.title = 'Home Page';
+};
+
+HomeController.$inject = ['PARSE'];
+
+exports['default'] = HomeController;
+module.exports = exports['default'];
+
+},{}],9:[function(require,module,exports){
+'use strict';
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _angular = require('angular');
+
+var _angular2 = _interopRequireDefault(_angular);
+
+var _controllersHomeController = require('./controllers/home.controller');
+
+var _controllersHomeController2 = _interopRequireDefault(_controllersHomeController);
+
+_angular2['default'].module('app.layout', []).controller('HomeController', _controllersHomeController2['default']);
+
+},{"./controllers/home.controller":8,"angular":13}],10:[function(require,module,exports){
+// Import our core files
+'use strict';
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _angular = require('angular');
+
+var _angular2 = _interopRequireDefault(_angular);
+
+// Import our sub modules
+
+require('./app-core/index');
+
+require('./app-layout/index');
+
+require('./app-cars/index');
+
+_angular2['default'].module('app', ['app.core', 'app.layout', 'app.cars']);
+
+},{"./app-cars/index":3,"./app-core/index":7,"./app-layout/index":9,"angular":13}],11:[function(require,module,exports){
 /**
  * State-based routing for AngularJS
  * @version v0.2.15
@@ -4586,7 +4610,7 @@ angular.module('ui.router.state')
   .filter('isState', $IsStateFilter)
   .filter('includedByState', $IncludedByStateFilter);
 })(window, window.angular);
-},{}],9:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 /**
  * @license AngularJS v1.4.7
  * (c) 2010-2015 Google, Inc. http://angularjs.org
@@ -33491,11 +33515,11 @@ $provide.value("$locale", {
 })(window, document);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],10:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":9}]},{},[6])
+},{"./angular":12}]},{},[10])
 
 
 //# sourceMappingURL=main.js.map

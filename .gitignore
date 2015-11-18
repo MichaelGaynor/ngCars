@@ -1,4 +1,4 @@
 node_modules
 .DS_Store
 .divshot-cache
-js/constants/parse.constant.js
+js/app-core/constants/parse.constant.js
