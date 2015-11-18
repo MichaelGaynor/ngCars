@@ -8,7 +8,7 @@ let CarsAddController = function(CarService) {
     CarService.addCar(carObj).then( (res) => {
       console.log(res);
     });
-  };
+  }
 
 };
 

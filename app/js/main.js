@@ -77,7 +77,7 @@ var CarsAddController = function CarsAddController(CarService) {
     CarService.addCar(carObj).then(function (res) {
       console.log(res);
     });
-  };
+  }
 };
 
 CarsAddController.$inject = ['CarService'];
@@ -198,16 +198,16 @@ var CarService = function CarService($http, PARSE) {
     this.name = carObj.name;
     this.color = carObj.color;
     this.fuzzydice = true;
-  };
+  }
 
   function getAllCars() {
     return $http.get(url, PARSE.CONFIG);
-  };
+  }
 
   function addCar(carObj) {
     var c = new Car(carObj);
     return $http.post(url, c, PARSE.CONFIG);
-  };
+  }
 };
 
 CarService.$inject = ['$http', 'PARSE'];
