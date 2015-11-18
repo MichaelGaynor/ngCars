@@ -5,6 +5,7 @@ let CarService = function($http, PARSE) {
   this.getAllCars = getAllCars;
   this.addCar = addCar;
   this.destroy = destroy;
+  this.toggleFuzzy = toggleFuzzy;
 
   function Car (carObj) {
     this.make = carObj.make;
@@ -13,6 +14,11 @@ let CarService = function($http, PARSE) {
     this.name = carObj.name;
     this.color = carObj.color;
     this.fuzzydice = true;
+  }
+
+  function toggleFuzzy (carObj) {
+    carObj.fuzzydice = carObj.fuzzydice ? false : true;
+    return $http.put(url + '/' + carObj.objectId, carObj, PARSE.CONFIG);
   }
 
   function getAllCars () {

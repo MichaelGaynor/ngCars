@@ -33,6 +33,7 @@ var CarsController = function CarsController(CarService) {
   var vm = this;
 
   vm.cars = [];
+  vm.clicked = clicked;
 
   activate();
 
@@ -40,6 +41,10 @@ var CarsController = function CarsController(CarService) {
     CarService.getAllCars().then(function (res) {
       vm.cars = res.data.results;
     });
+  }
+
+  function clicked(car) {
+    console.log('clicked', car.name);
   }
 };
 
@@ -62,11 +67,13 @@ var carItem = function carItem($state, CarService) {
     scope: {
       car: '=pizza'
     },
-    template: '\n      <div class="panel">\n        <h5>{{ car.name }}</h5>\n        <p>{{ car.year }} {{ car.make }} {{ car.model }}</p>\n      </div>\n    ',
+    template: '\n      <div class="panel" ng-click="vm.clicked(car)">\n        <h5>{{ car.name }}</h5>\n        <p ng-show="car.fuzzydice">Has Fuzzy Dice</p>\n        <p>{{ car.year }} {{ car.make }} {{ car.model }}</p>\n      </div>\n    ',
+    controller: 'CarsController as vm',
     link: function link(scope, element, attrs) {
       element.on('click', function () {
-        CarService.destroy(scope.car.name);
-        //$state.go('root.singleCar', { id: scope.car.objectId });
+        CarService.toggleFuzzy(scope.car);
+        // CarService.destroy(scope.car.name);
+        // $state.go('root.singleCar', { id: scope.car.objectId });
       });
     }
   };
@@ -119,6 +126,7 @@ var CarService = function CarService($http, PARSE) {
   this.getAllCars = getAllCars;
   this.addCar = addCar;
   this.destroy = destroy;
+  this.toggleFuzzy = toggleFuzzy;
 
   function Car(carObj) {
     this.make = carObj.make;
@@ -127,6 +135,11 @@ var CarService = function CarService($http, PARSE) {
     this.name = carObj.name;
     this.color = carObj.color;
     this.fuzzydice = true;
+  }
+
+  function toggleFuzzy(carObj) {
+    carObj.fuzzydice = carObj.fuzzydice ? false : true;
+    return $http.put(url + '/' + carObj.objectId, carObj, PARSE.CONFIG);
   }
 
   function getAllCars() {

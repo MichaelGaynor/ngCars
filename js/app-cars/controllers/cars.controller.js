@@ -3,6 +3,7 @@ let CarsController = function(CarService) {
   let vm = this;
 
   vm.cars = [];
+  vm.clicked = clicked;
 
   activate();
 
@@ -10,6 +11,10 @@ let CarsController = function(CarService) {
     CarService.getAllCars().then( (res) => {
       vm.cars = res.data.results;
     });
+  }
+
+  function clicked (car) {
+    console.log('clicked', car.name);
   }
   
 };
