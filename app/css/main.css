@@ -8428,6 +8428,12 @@ body {
     vertical-align: middle; }
 
 .uploadForm {
-  clear: both; }
+  clear: both;
+  width: 275px;
+  margin-top: 10px;
+  float: right;
+  background-color: #333333;
+  color: white;
+  padding: 10px 10px 5px 10px; }
 
 /*# sourceMappingURL=main.css.map */
