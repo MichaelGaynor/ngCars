@@ -36,6 +36,18 @@ let config = function($stateProvider, $urlRouterProvider) {
       url: '/cars/:id',
       controller: 'CarSingleController as vm',
       templateUrl: 'templates/app-cars/car-single.tpl.html'
+    })
+    // Signup
+    .state('root.signup', {
+      url: '/signup',
+      controller: 'SignupController as vm',
+      templateUrl: 'templates/app-user/signup.tpl.html'
+    })
+    // Login
+    .state('root.login', {
+      url: '/login',
+      controller: 'LoginController as vm',
+      templateUrl: 'templates/app-user/login.tpl.html'
     });
 };
 
