@@ -6,7 +6,7 @@ let LoginController = function(UserService) {
 
   function login (userObj) {
     UserService.login(userObj).then( (res) => {
-      UserService.storeAuth(res.data.sessionToken);
+      UserService.storeAuth(res.data);
     });
   }
 

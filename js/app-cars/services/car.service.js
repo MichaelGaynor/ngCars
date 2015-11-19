@@ -1,4 +1,4 @@
-let CarService = function($http, PARSE) {
+let CarService = function($http, PARSE, $cookies) {
   
   let url = PARSE.URL + 'classes/car';
 
@@ -32,7 +32,23 @@ let CarService = function($http, PARSE) {
   }
 
   function addCar (carObj) {
+    let userId = $cookies.get('car-tracker-user');
     let c = new Car(carObj);
+
+    let ACLObj = {};
+    ACLObj[userId] = {
+      read: true,
+      write: true
+    };
+
+    c.ACL = ACLObj;
+
+    c.user = {
+      __type: 'Pointer',
+      className: '_User',
+      objectId: userId
+    };
+
     return $http.post(url, c, PARSE.CONFIG);
   }
 
@@ -47,6 +63,6 @@ let CarService = function($http, PARSE) {
 
 };
 
-CarService.$inject = ['$http', 'PARSE'];
+CarService.$inject = ['$http', 'PARSE', '$cookies'];
 
 export default CarService;

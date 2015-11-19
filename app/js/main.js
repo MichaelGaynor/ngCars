@@ -215,7 +215,7 @@ _angular2['default'].module('app.cars', ['app.core']).controller('CarsController
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-var CarService = function CarService($http, PARSE) {
+var CarService = function CarService($http, PARSE, $cookies) {
 
   var url = PARSE.URL + 'classes/car';
 
@@ -249,7 +249,23 @@ var CarService = function CarService($http, PARSE) {
   }
 
   function addCar(carObj) {
+    var userId = $cookies.get('car-tracker-user');
     var c = new Car(carObj);
+
+    var ACLObj = {};
+    ACLObj[userId] = {
+      read: true,
+      write: true
+    };
+
+    c.ACL = ACLObj;
+
+    c.user = {
+      __type: 'Pointer',
+      className: '_User',
+      objectId: userId
+    };
+
     return $http.post(url, c, PARSE.CONFIG);
   }
 
@@ -263,7 +279,7 @@ var CarService = function CarService($http, PARSE) {
   }
 };
 
-CarService.$inject = ['$http', 'PARSE'];
+CarService.$inject = ['$http', 'PARSE', '$cookies'];
 
 exports['default'] = CarService;
 module.exports = exports['default'];
@@ -516,7 +532,7 @@ var LoginController = function LoginController(UserService) {
 
   function login(userObj) {
     UserService.login(userObj).then(function (res) {
-      UserService.storeAuth(res.data.sessionToken);
+      UserService.storeAuth(res.data);
     });
   }
 };
@@ -540,7 +556,7 @@ var SignupController = function SignupController(UserService) {
 
   function signUp(user) {
     UserService.signup(user).then(function (res) {
-      UserService.storeAuth(res.data.sessionToken);
+      UserService.storeAuth(res.data);
     });
   }
 };
@@ -586,9 +602,10 @@ var UserService = function UserService(PARSE, $http, $cookies, $state) {
   this.storeAuth = storeAuth;
   this.checkAuth = checkAuth;
 
-  function storeAuth(token) {
-    $cookies.put('car-tracker-auth', token);
-    setHeaders(token);
+  function storeAuth(user) {
+    $cookies.put('car-tracker-auth', user.sessionToken);
+    $cookies.put('car-tracker-user', user.objectId);
+    setHeaders(user.sessionToken);
     // THIS REALLY NEEDS TO BE BETTER!!!
     alert('you are logged in');
     // SERIOUSLY

@@ -5,9 +5,10 @@ let UserService = function(PARSE, $http, $cookies, $state) {
   this.storeAuth = storeAuth;
   this.checkAuth = checkAuth;
 
-  function storeAuth (token) {
-    $cookies.put('car-tracker-auth', token);
-    setHeaders(token);
+  function storeAuth (user) {
+    $cookies.put('car-tracker-auth', user.sessionToken);
+    $cookies.put('car-tracker-user', user.objectId);
+    setHeaders(user.sessionToken);
     // THIS REALLY NEEDS TO BE BETTER!!!
     alert('you are logged in');
     // SERIOUSLY
