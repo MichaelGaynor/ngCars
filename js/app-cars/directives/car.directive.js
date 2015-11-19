@@ -16,9 +16,7 @@ let carItem = function($state, CarService) {
     controller: 'CarsController as vm',
     link: function (scope, element, attrs) {
       element.on('click', function () {
-        CarService.toggleFuzzy(scope.car);
-        // CarService.destroy(scope.car.name);
-        // $state.go('root.singleCar', { id: scope.car.objectId });
+        $state.go('root.singleCar', { id: scope.car.objectId });
       });
     }
   };

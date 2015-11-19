@@ -33,7 +33,9 @@ let config = function($stateProvider, $urlRouterProvider) {
     })
     // Single Car
     .state('root.singleCar', {
-      url: '/cars/:id'
+      url: '/cars/:id',
+      controller: 'CarSingleController as vm',
+      templateUrl: 'templates/app-cars/car-single.tpl.html'
     });
 };
 

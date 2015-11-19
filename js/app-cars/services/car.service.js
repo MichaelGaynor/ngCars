@@ -2,10 +2,11 @@ let CarService = function($http, PARSE) {
   
   let url = PARSE.URL + 'classes/car';
 
-  this.getAllCars = getAllCars;
-  this.addCar = addCar;
-  this.destroy = destroy;
-  this.toggleFuzzy = toggleFuzzy;
+  this.getAllCars   = getAllCars;
+  this.addCar       = addCar;
+  this.destroy      = destroy;
+  this.toggleFuzzy  = toggleFuzzy;
+  this.getCar       = getCar;
 
   function Car (carObj) {
     this.make = carObj.make;
@@ -23,6 +24,10 @@ let CarService = function($http, PARSE) {
 
   function getAllCars () {
     return $http.get(url, PARSE.CONFIG);
+  }
+
+  function getCar (id) {
+    return $http.get(url + '/' + id, PARSE.CONFIG);
   }
 
   function addCar (carObj) {
