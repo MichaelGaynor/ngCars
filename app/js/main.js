@@ -8,12 +8,25 @@ var CarSingleController = function CarSingleController(CarService, $stateParams)
 
   var vm = this;
 
+  vm.showImageUpload = false;
+  vm.showForm = showForm;
+  vm.uploadImage = uploadImage;
+
   activate();
 
   function activate() {
     CarService.getCar($stateParams.id).then(function (res) {
       vm.car = res.data;
     });
+  }
+
+  function showForm() {
+    console.log('here');
+    vm.showImageUpload = vm.showImageUpload ? false : true;
+  }
+
+  function uploadImage(data) {
+    console.log(data);
   }
 };
 
@@ -89,7 +102,7 @@ var carItem = function carItem($state, CarService) {
     restrict: 'E',
     replace: true,
     scope: {
-      car: '=pizza'
+      car: '='
     },
     template: '\n      <div class="panel" ng-click="vm.clicked(car)">\n        <h5>{{ car.name }}</h5>\n        <p ng-show="car.fuzzydice">Has Fuzzy Dice</p>\n        <p>{{ car.year }} {{ car.make }} {{ car.model }}</p>\n      </div>\n    ',
     controller: 'CarsController as vm',

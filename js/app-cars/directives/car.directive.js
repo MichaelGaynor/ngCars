@@ -4,7 +4,7 @@ let carItem = function($state, CarService) {
     restrict: 'E',
     replace: true,
     scope: {
-      car: '=pizza'
+      car: '='
     },
     template: `
       <div class="panel" ng-click="vm.clicked(car)">

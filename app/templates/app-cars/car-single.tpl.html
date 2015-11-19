@@ -1,3 +1,12 @@
 <h3>Single Car</h3>
 
-<p>{{ vm.car }}</p>
+<car-item car="vm.car"></car-item>
+
+<hr>
+
+<button ng-click="vm.showForm()">Attach Image</button>
+
+<form ng-show="vm.showImageUpload" ng-submit="vm.uploadImage(url)">
+  <input type="file" id="carImage" ng-model="url">
+  <button>Add Image</button>
+</form>
