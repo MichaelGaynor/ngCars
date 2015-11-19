@@ -15,7 +15,6 @@ let CarSingleController = function(CarService, $stateParams) {
   }
 
   function showForm () {
-    console.log('here');
     vm.showImageUpload = (vm.showImageUpload) ? false : true;
   }
 

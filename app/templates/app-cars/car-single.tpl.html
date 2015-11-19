@@ -2,12 +2,10 @@
 
 <car-item car="vm.car"></car-item>
 
+<img ng-show="vm.car.image" ng-src="{{ vm.car.image }}">
+
 <hr>
 
 <a class="attachImage" ng-click="vm.showForm()"><i class="fa fa-cloud-upload"></i> Attach Image</a>
 
-
-<form ng-show="vm.showImageUpload" ng-submit="vm.uploadImage(url)" class="uploadForm">
-  <input type="file" id="carImage" ng-model="url">
-  <button>Add Image</button>
-</form>
+<add-image ng-show="vm.showImageUpload" car="vm.car"></add-image>

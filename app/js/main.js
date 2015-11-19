@@ -21,7 +21,6 @@ var CarSingleController = function CarSingleController(CarService, $stateParams)
   }
 
   function showForm() {
-    console.log('here');
     vm.showImageUpload = vm.showImageUpload ? false : true;
   }
 
@@ -96,6 +95,39 @@ module.exports = exports['default'];
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
+var addImage = function addImage(CarService, UploadService) {
+
+  return {
+
+    restrict: 'E',
+    replace: true,
+    scope: {
+      car: '='
+    },
+    templateUrl: 'templates/app-cars/upload.tpl.html',
+    link: function link(scope, element, attrs) {
+      element.on('submit', function () {
+
+        var file = element.find('input')[0].files[0];
+        UploadService.upload(file).then(function (res) {
+          CarService.addImage(res.data.upload.file_url, scope.car).then(function (res) {});
+        });
+      });
+    }
+  };
+};
+
+addImage.$inject = ['CarService', 'UploadService'];
+
+exports['default'] = addImage;
+module.exports = exports['default'];
+
+},{}],5:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
 var carItem = function carItem($state, CarService) {
 
   return {
@@ -119,7 +151,7 @@ carItem.$inject = ['$state', 'CarService'];
 exports['default'] = carItem;
 module.exports = exports['default'];
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -146,13 +178,21 @@ var _servicesCarService = require('./services/car.service');
 
 var _servicesCarService2 = _interopRequireDefault(_servicesCarService);
 
+var _servicesUploadService = require('./services/upload.service');
+
+var _servicesUploadService2 = _interopRequireDefault(_servicesUploadService);
+
 var _directivesCarDirective = require('./directives/car.directive');
 
 var _directivesCarDirective2 = _interopRequireDefault(_directivesCarDirective);
 
-_angular2['default'].module('app.cars', ['app.core']).controller('CarsController', _controllersCarsController2['default']).controller('CarsAddController', _controllersCarsAddController2['default']).controller('CarSingleController', _controllersCarSingleController2['default']).service('CarService', _servicesCarService2['default']).directive('carItem', _directivesCarDirective2['default']);
+var _directivesAddImageDirective = require('./directives/addImage.directive');
 
-},{"../app-core/index":9,"./controllers/car-single.controller":1,"./controllers/cars-add.controller":2,"./controllers/cars.controller":3,"./directives/car.directive":4,"./services/car.service":6,"angular":15}],6:[function(require,module,exports){
+var _directivesAddImageDirective2 = _interopRequireDefault(_directivesAddImageDirective);
+
+_angular2['default'].module('app.cars', ['app.core']).controller('CarsController', _controllersCarsController2['default']).controller('CarsAddController', _controllersCarsAddController2['default']).controller('CarSingleController', _controllersCarSingleController2['default']).service('CarService', _servicesCarService2['default']).service('UploadService', _servicesUploadService2['default']).directive('carItem', _directivesCarDirective2['default']).directive('addImage', _directivesAddImageDirective2['default']);
+
+},{"../app-core/index":12,"./controllers/car-single.controller":1,"./controllers/cars-add.controller":2,"./controllers/cars.controller":3,"./directives/addImage.directive":4,"./directives/car.directive":5,"./services/car.service":7,"./services/upload.service":8,"angular":18}],7:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -167,6 +207,7 @@ var CarService = function CarService($http, PARSE) {
   this.destroy = destroy;
   this.toggleFuzzy = toggleFuzzy;
   this.getCar = getCar;
+  this.addImage = addImage;
 
   function Car(carObj) {
     this.make = carObj.make;
@@ -195,6 +236,11 @@ var CarService = function CarService($http, PARSE) {
     return $http.post(url, c, PARSE.CONFIG);
   }
 
+  function addImage(imageUrl, car) {
+    car.image = imageUrl;
+    return $http.put(url + '/' + car.objectId, car, PARSE.CONFIG);
+  }
+
   function destroy(name) {
     return console.log(name + ' has been destroyed');
   }
@@ -205,7 +251,32 @@ CarService.$inject = ['$http', 'PARSE'];
 exports['default'] = CarService;
 module.exports = exports['default'];
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+var UploadService = function UploadService($http, FILESERVER) {
+
+  this.upload = upload;
+
+  function upload(file) {
+
+    var formData = new FormData();
+    formData.append('upload', file);
+    // formData.append('details', JSON.stringify({ name: 'Tim' }));
+
+    return $http.post(FILESERVER.URL, formData, FILESERVER.CONFIG);
+  }
+};
+
+UploadService.$inject = ['$http', 'FILESERVER'];
+
+exports['default'] = UploadService;
+module.exports = exports['default'];
+
+},{}],9:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -257,7 +328,24 @@ config.$inject = ['$stateProvider', '$urlRouterProvider'];
 exports['default'] = config;
 module.exports = exports['default'];
 
-},{}],8:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+exports['default'] = {
+  URL: 'https://infinite-tor-5730.herokuapp.com/wishes/4/grants',
+  CONFIG: {
+    headers: {
+      'Access-Token': 'e2f6a3294d967cf16d334e4cb31cfa4c',
+      'Content-Type': undefined
+    }
+  }
+};
+module.exports = exports['default'];
+
+},{}],11:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -274,7 +362,7 @@ exports['default'] = {
 };
 module.exports = exports['default'];
 
-},{}],9:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -293,9 +381,13 @@ var _constantsParseConstant = require('./constants/parse.constant');
 
 var _constantsParseConstant2 = _interopRequireDefault(_constantsParseConstant);
 
-_angular2['default'].module('app.core', ['ui.router']).config(_config2['default']).constant('PARSE', _constantsParseConstant2['default']);
+var _constantsFileserverConstant = require('./constants/fileserver.constant');
 
-},{"./config":7,"./constants/parse.constant":8,"angular":15,"angular-ui-router":13}],10:[function(require,module,exports){
+var _constantsFileserverConstant2 = _interopRequireDefault(_constantsFileserverConstant);
+
+_angular2['default'].module('app.core', ['ui.router']).config(_config2['default']).constant('PARSE', _constantsParseConstant2['default']).constant('FILESERVER', _constantsFileserverConstant2['default']);
+
+},{"./config":9,"./constants/fileserver.constant":10,"./constants/parse.constant":11,"angular":18,"angular-ui-router":16}],13:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -315,7 +407,7 @@ HomeController.$inject = ['PARSE'];
 exports['default'] = HomeController;
 module.exports = exports['default'];
 
-},{}],11:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -330,7 +422,7 @@ var _controllersHomeController2 = _interopRequireDefault(_controllersHomeControl
 
 _angular2['default'].module('app.layout', []).controller('HomeController', _controllersHomeController2['default']);
 
-},{"./controllers/home.controller":10,"angular":15}],12:[function(require,module,exports){
+},{"./controllers/home.controller":13,"angular":18}],15:[function(require,module,exports){
 // Import our core files
 'use strict';
 
@@ -350,7 +442,7 @@ require('./app-cars/index');
 
 _angular2['default'].module('app', ['app.core', 'app.layout', 'app.cars']);
 
-},{"./app-cars/index":5,"./app-core/index":9,"./app-layout/index":11,"angular":15}],13:[function(require,module,exports){
+},{"./app-cars/index":6,"./app-core/index":12,"./app-layout/index":14,"angular":18}],16:[function(require,module,exports){
 /**
  * State-based routing for AngularJS
  * @version v0.2.15
@@ -4721,7 +4813,7 @@ angular.module('ui.router.state')
   .filter('isState', $IsStateFilter)
   .filter('includedByState', $IncludedByStateFilter);
 })(window, window.angular);
-},{}],14:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 /**
  * @license AngularJS v1.4.7
  * (c) 2010-2015 Google, Inc. http://angularjs.org
@@ -33626,11 +33718,11 @@ $provide.value("$locale", {
 })(window, document);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],15:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":14}]},{},[12])
+},{"./angular":17}]},{},[15])
 
 
 //# sourceMappingURL=main.js.map

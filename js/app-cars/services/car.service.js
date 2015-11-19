@@ -7,6 +7,7 @@ let CarService = function($http, PARSE) {
   this.destroy      = destroy;
   this.toggleFuzzy  = toggleFuzzy;
   this.getCar       = getCar;
+  this.addImage     = addImage;
 
   function Car (carObj) {
     this.make = carObj.make;
@@ -33,6 +34,11 @@ let CarService = function($http, PARSE) {
   function addCar (carObj) {
     let c = new Car(carObj);
     return $http.post(url, c, PARSE.CONFIG);
+  }
+
+  function addImage (imageUrl, car) {
+    car.image = imageUrl;
+    return $http.put(url + '/' + car.objectId, car, PARSE.CONFIG);
   }
 
   function destroy (name) {
