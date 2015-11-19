@@ -1,10 +1,13 @@
-let CarSingleController = function(CarService, $stateParams) {
+let CarSingleController = function(CarService, $stateParams, MainService) {
   
   let vm = this;
 
   vm.showImageUpload = false;
+  vm.showMainFormNow = false;
   vm.showForm        = showForm;
   vm.uploadImage     = uploadImage;
+  vm.showMainForm    = showMainForm;
+  vm.addMain         = addMain;
 
   activate();
 
@@ -14,8 +17,18 @@ let CarSingleController = function(CarService, $stateParams) {
     });
   }
 
+  function addMain (mainObj, car) {
+    MainService.attachMain(mainObj, car).then( (res) => {
+      console.log(res);
+    });
+  }
+
   function showForm () {
     vm.showImageUpload = (vm.showImageUpload) ? false : true;
+  }
+
+  function showMainForm () {
+    vm.showMainFormNow = (vm.showMainFormNow) ? false : true;
   }
 
   function uploadImage (data) {
@@ -24,6 +37,6 @@ let CarSingleController = function(CarService, $stateParams) {
 
 };
 
-CarSingleController.$inject = ['CarService', '$stateParams'];
+CarSingleController.$inject = ['CarService', '$stateParams', 'MainService'];
 
 export default CarSingleController;
