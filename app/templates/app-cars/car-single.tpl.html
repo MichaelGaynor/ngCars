@@ -4,9 +4,10 @@
 
 <hr>
 
-<button ng-click="vm.showForm()">Attach Image</button>
+<a class="attachImage" ng-click="vm.showForm()"><i class="fa fa-cloud-upload"></i> Attach Image</a>
 
-<form ng-show="vm.showImageUpload" ng-submit="vm.uploadImage(url)">
+
+<form ng-show="vm.showImageUpload" ng-submit="vm.uploadImage(url)" class="uploadForm">
   <input type="file" id="carImage" ng-model="url">
   <button>Add Image</button>
 </form>

@@ -1,6 +1,7 @@
 // Put any @imports here
 // See Readme for a list of supported ones
 @import "foundation";
+@import "font-awesome";
 
 body {
   background: #e2ebf3;
@@ -14,4 +15,18 @@ body {
 
 .panel {
   cursor: pointer;
+}
+
+.attachImage {
+  float: right;
+  font-size: 12px;
+  vertical-align: middle;
+  i {
+    padding-right: 5px;
+    font-size: 18px;
+    vertical-align: middle;
+  }
+}
+.uploadForm {
+  clear: both;
 }
