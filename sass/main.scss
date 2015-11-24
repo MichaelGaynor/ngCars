@@ -3,6 +3,8 @@
 @import "foundation";
 @import "font-awesome";
 
+@include foundation-everything;
+
 body {
   background: #e2ebf3;
   position: relative;
